@@ -1,5 +1,14 @@
 import cv2   
 import numpy as np
+#import librosa
+import matplotlib
+import tkinter
+matplotlib.use('TkAgg')
+import matplotlib.pyplot as plt
+
+#import tkinter
+#plt.use('TkAgg')
+
 
 #Captura de video a traves de la webcam
 #cap=cv2.VideoCapture(0)
@@ -10,10 +19,50 @@ centers=[]
 #_, img = cap.read()
 
 #img = cv2.imread('/home/oliver/Documentos/UFF-Mestrado/2019-B/AI/project3.jpeg')
-img = cv2.imread('/home/oliver/Documentos/2019B/AI/estirada3.jpeg')
-
+img = cv2.imread('/home/oliver/Documentos/2019B/AI/AI-project/estirada3.jpeg')
+img2 = cv2.imread('/home/oliver/Documentos/2019B/AI/AI-project/estirada3.jpeg')
 print(img.shape)
-hsv=cv2.cvtColor(img,cv2.COLOR_BGR2HSV) #Se obtiene un histograma basada en las saturaciones de colores.
+hsv = cv2.cvtColor(img,cv2.COLOR_BGR2HSV) #Se obtiene un histograma basada en las saturaciones de colores.
+hsv_equ = cv2.cvtColor(img,cv2.COLOR_BGR2HSV) 
+#im2=cv2.cvtColor(img,cv2.COLOR_BGR2GRAY)
+#equ = cv2.equalizeHist(hsv)
+#res = np.wstack((img,equ))
+
+#hsv_equ[:,:,0] = cv2.equalizeHist(hsv_equ[:,:,0])
+#hsv_equ[:,0,:] = cv2.equalizeHist(hsv_equ[:,0,:])
+#hsv_equ[0,:,:] = cv2.equalizeHist(hsv_equ[0,:,:])
+
+##################################################
+img2[:,:,0] = cv2.equalizeHist(img2[:,:,0])
+img2[:,0,:] = cv2.equalizeHist(img2[:,0,:])
+img2[0,:,:] = cv2.equalizeHist(img2[0,:,:])
+
+#cv2.imshow("HSV result",hsv)
+#cv2.waitKey(0)
+#cv2.imshow("HSV result",hsv_equ)
+#cv2.waitKey(0)
+
+cv2.imshow("result",img)
+cv2.waitKey(0)
+
+cv2.imshow("EQUresult",img2)
+cv2.waitKey(0)
+
+#histogram = cv2.calcHist
+#print(hsv)
+
+#lt.hist(img[:,:,0].ravel(),256,[0,256]); plt.show()
+
+color = ('b','g','r')
+hist=[]
+for i,col in enumerate(color):
+    histr = cv2.calcHist([img],[i],None,[256],[0,256])
+    hist.append(histr)
+    print("hist> ",np.ravel(histr))
+    plt.plot(np.ravel(histr),color = col)
+    plt.xlim([0,256])
+print("ssss")
+plt.show()
 
 #cv2.namedWindow('Measure DIstance',cv2.WINDOW_NORMAL)
 #cv2.resizeWindow('Measure Distance', 640,480)
@@ -71,9 +120,11 @@ cv2.putText(img,"Distancia = "+str(round(dist*2.54, 2))+" cm", (20,30),cv2.FONT_
 
 #cv2.namedWindow('Measure DIstance',cv2.WINDOW_NORMAL)
 #cv2.resizeWindow('Measure Distance',640,480)
-cv2.imshow("Measure Distance",img)
-cv2.waitKey(0)
+#cv2.imshow("Measure Distance",img)
+#cv2.waitKey(0)
     #if cv2.waitKey(10) & 0xFF == ord('q'):
     #    cap.release()
     #    cv2.destroyAllWindows()
     #    break
+
+
